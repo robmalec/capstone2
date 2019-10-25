@@ -33,7 +33,31 @@ public class Task {
 		int month = dueDate.get(GregorianCalendar.MONTH) + 1;
 		int day = dueDate.get(GregorianCalendar.DAY_OF_MONTH);
 		int year = dueDate.get(GregorianCalendar.YEAR);
-		return (month + "/" + day + "/" + year);
+		int hour = dueDate.get(GregorianCalendar.HOUR);
+		int minute = dueDate.get(GregorianCalendar.MINUTE);
+		String minuteString = "";
+		
+		//Adding the extra leading zero if it's less than 10 minutes into the hour
+		if (minute < 10) {
+			minuteString += "0";
+		}
+		minuteString += minute;
+		
+		String amPm = "";
+		
+		switch (dueDate.get(GregorianCalendar.AM_PM)) {
+		case GregorianCalendar.AM:
+			amPm = "am";
+			break;
+		case GregorianCalendar.PM:
+			amPm = "pm";
+			break;
+			default:
+				break;
+				
+		}
+		
+		return (month + "/" + day + "/" + year + " at " + hour + ":" + minuteString + " " + amPm);
 	}
 	public void setDate(GregorianCalendar dueDate) {
 		this.dueDate = dueDate;
@@ -43,7 +67,7 @@ public class Task {
 		return completed;
 	}
 	public Boolean setCompleted(Boolean completed) {
-		if (!getCompleted) {
+		if (!getCompleted()) {
 			this.completed = completed;
 			return true;
 		}
