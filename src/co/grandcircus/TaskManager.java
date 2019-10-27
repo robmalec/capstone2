@@ -89,6 +89,7 @@ public class TaskManager {
 				System.out.printf(printFormat, (counter + ". "), t.getCompleted().toString(), t.getDate(),
 						t.getMemberName(), t.getDescription());
 				counter++;
+				System.out.println("");
 			}
 			System.out.println("");
 		}
