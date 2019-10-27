@@ -9,10 +9,13 @@ public class Task {
 	Boolean completed = false;
 	
 	public Task() {	};
-	public Task(String memberName, String description, GregorianCalendar dueDate) {
+	public Task(String memberName, String description, GregorianCalendar iDueDate) {
+		
+		
+		String minuteString = "";
 		this.memberName = memberName;
 		this.description = description;
-		this.dueDate = dueDate;
+		this.dueDate = iDueDate;
 	}
 	
 	public String getMemberName() {
@@ -30,7 +33,7 @@ public class Task {
 	}
 	
 	public String getDate() {
-		int month = dueDate.get(GregorianCalendar.MONTH) + 1;
+		int month = dueDate.get(GregorianCalendar.MONTH);
 		int day = dueDate.get(GregorianCalendar.DAY_OF_MONTH);
 		int year = dueDate.get(GregorianCalendar.YEAR);
 		int hour = dueDate.get(GregorianCalendar.HOUR);
@@ -61,6 +64,10 @@ public class Task {
 	}
 	public void setDate(GregorianCalendar dueDate) {
 		this.dueDate = dueDate;
+	}
+	
+	public long getDateTimeNum() {
+		return dueDate.getTimeInMillis();
 	}
 	
 	public Boolean getCompleted() {
