@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 
 public class TaskManager {
 	static ArrayList<Task> masterList = new ArrayList<Task>();
+	static ArrayList<String> memberNames = new ArrayList<>();
 	static Scanner scn = new Scanner(System.in);
 
 	public static void main(String[] args) {
@@ -22,6 +23,7 @@ public class TaskManager {
 			System.out.println("\t3. Delete task");
 			System.out.println("\t4. Mark task complete");
 			System.out.println("\t5. View tasks due by time");
+			System.out.println("\t6. View tasks for individual team members");
 			System.out.println("\t6. Quit");
 
 			System.out.println("");
@@ -59,6 +61,10 @@ public class TaskManager {
 				listTasks(getTasksDueByTime());
 				break;
 			case 6:
+				//View tasks by each individual member
+				listTasks(getTasksByMember());
+				break;
+			case 7:
 				break;
 			default:
 				System.out.println("That wasn't an option.  Please try again.");
@@ -105,6 +111,7 @@ public class TaskManager {
 		System.out.println("ADD TASK\n");
 		
 		memberName = Validator.getString(scn, "Team member name: ");
+		memberNames.add(memberName.toLowerCase());
 		System.out.println("");
 		
 		description = Validator.getString(scn, "Description: ");
@@ -168,6 +175,36 @@ public class TaskManager {
 		} else {
 			System.out.println("Task #" + i + " is already complete.");
 		}
+	}
+	
+	public static ArrayList<Task> getTasksByMember(){
+		System.out.println("Viewing tasks by assignee.  The team members are: ");
+		for (String s : memberNames) {
+			System.out.println(s);
+		}
+	
+		System.out.println("");
+		
+		Boolean foundName = false;
+		
+		String memberName = "";
+		
+		while (true) {
+			memberName = Validator.getString(scn, "Searching tasks by assigned team member.  Please enter a name that you see above:").toLowerCase();
+			if (memberNames.contains(memberName)) {
+				break;
+			}
+			System.out.println("Nobody with that name is assigned a task.  Please enter a name in the above list.");
+		}
+		
+		
+		ArrayList<Task> list = new ArrayList<>();
+		for (Task t : masterList) {
+			if (t.getMemberName().equals(memberName)){
+				list.add(t);
+			}
+		}
+		return list;
 	}
 
 	public static ArrayList<Task> getTasksDueByTime() {
